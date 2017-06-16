@@ -37,35 +37,42 @@
                            :title "Sample API"
                            :description "Sample Services"}}}}
 
-  (context "/api" []
+  (context
+    "/api" []
     :tags ["thingie"]
 
+    (GET "/cat-links" []
+         :query-params [link-count :- Long]
+         :summary "returns a collection of image links"
+         :return [s/Str]
+         (ok (parse-links (get-links link-count))))
+
     (GET "/plus" []
-      :return       Long
-      :query-params [x :- Long, {y :- Long 1}]
-      :summary      "x+y with query-parameters. y defaults to 1."
-      (ok (+ x y)))
+         :return       Long
+         :query-params [x :- Long, {y :- Long 1}]
+         :summary      "x+y with query-parameters. y defaults to 1."
+         (ok (+ x y)))
 
     (POST "/minus" []
-      :return      Long
-      :body-params [x :- Long, y :- Long]
-      :summary     "x-y with body-parameters."
-      (ok (- x y)))
+          :return      Long
+          :body-params [x :- Long, y :- Long]
+          :summary     "x-y with body-parameters."
+          (ok (- x y)))
 
     (GET "/times/:x/:y" []
-      :return      Long
-      :path-params [x :- Long, y :- Long]
-      :summary     "x*y with path-parameters"
-      (ok (* x y)))
+         :return      Long
+         :path-params [x :- Long, y :- Long]
+         :summary     "x*y with path-parameters"
+         (ok (* x y)))
 
     (POST "/divide" []
-      :return      Double
-      :form-params [x :- Long, y :- Long]
-      :summary     "x/y with form-parameters"
-      (ok (/ x y)))
+          :return      Double
+          :form-params [x :- Long, y :- Long]
+          :summary     "x/y with form-parameters"
+          (ok (/ x y)))
 
     (GET "/power" []
-      :return      Long
-      :header-params [x :- Long, y :- Long]
-      :summary     "x^y with header-parameters"
-      (ok (long (Math/pow x y))))))
+         :return      Long
+         :header-params [x :- Long, y :- Long]
+         :summary     "x^y with header-parameters"
+         (ok (long (Math/pow x y))))))
